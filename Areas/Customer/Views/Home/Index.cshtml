@@ -1,0 +1,44 @@
+﻿@model VRCreative.Models.ViewModels.HomeViewModel
+
+<div class="text-center">
+    <h1>Event Management Services</h3>
+    <h4>Template website for service-based start-up businesses.</h4>
+    <h5 class="text-danger">Admin features are under developement.</h5> 
+
+</div>
+
+
+@foreach(var category in Model.CategoryList.OrderBy(o => o.DisplayOrder))
+{
+    @if (Model.ServiceList.Where(c => c.CategoryId == category.Id).Count() > 0)
+    {
+        <div class="row container pb-3 backgroundWhite border">
+            <div class="col-12">
+                <div class="row">
+                    <h2 class="text-primary"><b>@category.Name</b></h2>
+
+                    <div class="col-12">
+                        <div class="row my-3">
+                            @foreach(var service in Model.ServiceList.Where(c=>c.CategoryId==category.Id))
+                            {
+                                <div class="col-lg-4 col-xl-3 col-md-6 pb-4">
+                                    <div class="card" style="border:2px solid #0a1d26;border-radius:5px; background:url('/images/black_card_background.jpg')">
+                                        <div class="pl-3 pt-1 text-center">
+                                            <h3 class="card-title text-success"><b>@service.Name</b></h3>
+                                        </div>
+                                        <div class="d-flex justify-content-between ">
+                                            <div class="pl-1 text-muted">Price per service</div>
+                                            <div class="pr-1 text-danger h5">$@service.Price</div>
+                                        </div>
+                                        <img src="@service.ImageUrl" class="card-img-top p-2 rounded" />
+                                        <a asp-action="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@service.Id">Details</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
